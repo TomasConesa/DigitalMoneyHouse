@@ -40,14 +40,12 @@ public class UserService {
                 .password(encoder.encode(req.password()))
                 .build();
 
-        // 🔹 Asignar rol por defecto
         Role defaultRole = roleRepository.findByRoleName("ROLE_USER")
                 .orElseThrow(() -> new ResourceNotFoundException("Rol no encontrado: ROLE_USER"));
         newUser.getRoles().add(defaultRole);
 
         User savedUser = userRepository.save(newUser);
 
-        // Llamar a account-service para crear cuenta
         AccountResponse accountResponse = accountClient.createAccount(savedUser.getUserId());
 
         return mapToRegisterResponse(savedUser, accountResponse);
@@ -78,7 +76,6 @@ public class UserService {
     public List<RegisterResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
 
-        // Mapeo cada User a RegisterReponse llamando a account-service
         return users.stream().map(user -> {
             AccountResponse accountResponse = accountClient.getAccountByUserId(user.getUserId());
             return mapToRegisterResponse(user, accountResponse);
@@ -106,7 +103,6 @@ public class UserService {
                 .distinct()
                 .toList();
 
-        // Convertir a lista para el dto UserAuthDto
         return new UserAuthDto(
                 user.getUserId(),
                 user.getEmail(),
