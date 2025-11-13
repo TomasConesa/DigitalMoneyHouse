@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "accounts")
 @Data
@@ -19,11 +21,14 @@ public class Account {
     private Long accountId;
 
     @Column(nullable = false, unique = true)
-    private Long userId; // Para relacionar con userId de users-service
+    private Long userId;
 
     @Column(nullable = false, unique = true, length = 22)
     private String cvu;
 
     @Column(nullable = false, unique = true)
     private String alias;
+
+    @Column(nullable = false)
+    private BigDecimal balance;
 }
