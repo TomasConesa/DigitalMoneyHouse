@@ -25,12 +25,10 @@ public class JwtGenerator {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    // Método privado para obtener la clave de firma
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    // Generar un token JWT a partir del email
     public String generateToken(String email, List<String> roles) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
@@ -44,7 +42,6 @@ public class JwtGenerator {
                 .compact();
     }
 
-    // Extraer el email (subject) del token
     public String extractUsername(String token) {
         try {
             return Jwts.parserBuilder()
@@ -60,7 +57,6 @@ public class JwtGenerator {
         }
     }
 
-    // Extraer roles del token
     public List<String> extractRoles(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
@@ -69,7 +65,7 @@ public class JwtGenerator {
                     .parseClaimsJws(token)
                     .getBody();
 
-            return claims.get("roles", List.class); // Warning normal en JWT
+            return claims.get("roles", List.class);
         } catch (ExpiredJwtException e) {
             throw new JwtExpiredException("Token expirado");
         } catch (io.jsonwebtoken.JwtException e) {
@@ -77,10 +73,9 @@ public class JwtGenerator {
         }
     }
 
-    // Validar el token
     public boolean validateToken(String token) {
         try {
-            extractUsername(token); // lanza excepciones si no es valido
+            extractUsername(token);
             return true;
         } catch (JwtException e) {
             return false;

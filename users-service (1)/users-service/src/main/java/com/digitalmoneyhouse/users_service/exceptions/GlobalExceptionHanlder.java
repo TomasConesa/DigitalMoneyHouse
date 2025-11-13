@@ -32,7 +32,6 @@ public class GlobalExceptionHanlder {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
     }
 
-    // Validaciones de Bean Validation (DTO @NotBlank, @Email, etc.)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
