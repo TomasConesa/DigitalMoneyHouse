@@ -37,7 +37,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = header.substring(7);
 
         try {
-            // Extraer username (email) y roles
             String username = jwtGenerator.extractUsername(token);
             List<String> roles = jwtGenerator.extractRoles(token);
 
@@ -54,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
         } catch (JwtException e) {
-            // Si hay error con el token, lo dejamos pasar al EntryPoint
             request.setAttribute("jwtError", e.getMessage());
         }
 

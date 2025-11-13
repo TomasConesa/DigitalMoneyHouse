@@ -12,7 +12,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Maneja cualquier JwtException genérica
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<Map<String, Object>> handleJwtException(JwtException ex) {
         Map<String, Object> body = new HashMap<>();

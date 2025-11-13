@@ -44,11 +44,11 @@ public class User {
 
     // Relación con roles
     @Builder.Default
-    @ManyToMany(fetch = FetchType.EAGER) // EAGER para que siempre traiga los roles con el usuario
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles", // tabla intermedia
-            joinColumns = @JoinColumn(name = "user_id"), // FK a users
-            inverseJoinColumns = @JoinColumn(name = "role_id") // FK a roles
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
