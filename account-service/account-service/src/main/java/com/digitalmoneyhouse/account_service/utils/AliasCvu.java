@@ -58,7 +58,7 @@ public class AliasCvu {
     public String generateCVU() {
         StringBuilder cvu = new StringBuilder();
         for (int i = 0; i < 22; i++) {
-            cvu.append(random.nextInt(10)); // número entre 0 y 9
+            cvu.append(random.nextInt(10));
         }
         return cvu.toString();
     }
