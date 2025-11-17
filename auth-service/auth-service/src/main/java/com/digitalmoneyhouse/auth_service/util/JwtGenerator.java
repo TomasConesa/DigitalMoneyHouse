@@ -65,7 +65,7 @@ public class JwtGenerator {
                     .parseClaimsJws(token)
                     .getBody();
 
-            return claims.get("roles", List.class); // Warning normal en JWT
+            return claims.get("roles", List.class);
         } catch (ExpiredJwtException e) {
             throw new JwtExpiredException("Token expirado");
         } catch (io.jsonwebtoken.JwtException e) {
