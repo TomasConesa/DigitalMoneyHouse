@@ -1,0 +1,17 @@
+# Ignore environment variables
+.env
+*.env
+.env.*
+
+# Ignore IntelliJ IDEA
+/.idea/
+
+# Ignore build outputs
+target/
+*/target/
+
+# Ignore logs
+*.log
+
+# Ignore temporary files
+*.iml
