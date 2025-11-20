@@ -3,10 +3,13 @@ package com.digitalmoneyhouse.account_service.service;
 import com.digitalmoneyhouse.account_service.exceptions.ResourceNotFoundException;
 import com.digitalmoneyhouse.account_service.model.Account;
 import com.digitalmoneyhouse.account_service.model.dto.AccountResponse;
+import com.digitalmoneyhouse.account_service.model.dto.BalanceResponse;
 import com.digitalmoneyhouse.account_service.repository.AccountRepository;
 import com.digitalmoneyhouse.account_service.utils.AliasCvu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +22,6 @@ public class AccountService {
         String cvu = generator.generateCVU();
         String alias = generator.generateAlias();
 
-        // asegurarse de que sean únicos
         while (accountRepository.existsByCvu(cvu)) {
             cvu = generator.generateCVU();
         }
@@ -31,6 +33,7 @@ public class AccountService {
                 .userId(userId)
                 .cvu(cvu)
                 .alias(alias)
+                .balance(BigDecimal.ZERO)
                 .build();
 
         Account savedAccount = accountRepository.save(newAccount);
@@ -39,6 +42,16 @@ public class AccountService {
                 savedAccount.getAccountId(),
                 savedAccount.getCvu(),
                 savedAccount.getAlias()
+        );
+    }
+
+    public BalanceResponse getBalance(Long accountId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada con id: " + accountId));
+
+        return new BalanceResponse(
+                account.getAccountId(),
+                account.getBalance()
         );
     }
 

@@ -1,6 +1,7 @@
 package com.digitalmoneyhouse.account_service.controller;
 
 import com.digitalmoneyhouse.account_service.model.dto.AccountResponse;
+import com.digitalmoneyhouse.account_service.model.dto.BalanceResponse;
 import com.digitalmoneyhouse.account_service.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,12 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<AccountResponse> createAccount(@RequestParam Long userId) {
         AccountResponse response = accountService.createAccount(userId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<BalanceResponse> getBalance(@PathVariable Long accountId) {
+        BalanceResponse response = accountService.getBalance(accountId);
         return ResponseEntity.ok(response);
     }
 
