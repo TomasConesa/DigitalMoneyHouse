@@ -105,13 +105,77 @@ Request:
 	"email": "kd@mail.com",
   "password": "kevindurant"
 }
-Response: {
+Response: 
+{
     "token": "Token generado",
     "roles": [Rol asociado] 
 }
 Verificar que: 
 El status sea 200.
 La respuesta devuelva un JWT (token de acceso).
+
+Consultar cuenta por id:
+GET http://localhost:8080/accounts/user/{userId}
+Response: 
+{
+    "accountId": 10,
+    "cvu": "7092880806685863729298",
+    "alias": "océano.montaña.cielo"
+}
+
+
+🧪 Testing
+Para facilitar la validación de los endpoints del sistema, el proyecto incluye una colección completa de Postman con todas las requests necesarias para probar el flujo.
+Ruta: /docs/postman/DMH.postman_collection.json
+Cómo usarla:
+Levantar todos los microservicios desde IntelliJ.
+
+Importar la colección en Postman desde File → Import.
+
+Usar las requests ya configuradas apuntando al API Gateway (http://localhost:8080).
+
+Agregar el JWT (en caso del logout) en el header Authorization: Bearer <token>.
+
+
+
+💡 Decisiones Técnicas y Problemas Resueltos
+✔️ Decisión: Uso de JWT para Autenticación
+
+Se eligió JWT (JSON Web Tokens) por los siguientes motivos:
+
+Es una solución ligera y rápida para microservicios.
+
+No requiere mantener estado en el servidor.
+
+Facilita la comunicación entre servicios detrás del API Gateway.
+
+Permite escalar sin depender de sesiones compartidas.
+
+En el futuro se puede migrar a Keycloak para manejar roles, permisos, SSO y administración centralizada.
+
+✔️ Gestión de dependencias y compatibilidad con Spring Boot 3.5.x
+
+Hubo problemas iniciales con:
+
+Cambios en dependencias de Spring Cloud Gateway
+
+Ajustes por migración de WebFlux / REST clásico
+
+Compatibilidad entre springdoc-openapi y Spring Boot
+
+Configuración YAML en microservicios separados
+
+Se resolvió:
+
+Utilizando la dependencia correcta para spring-cloud-gateway-server.
+
+Reestructurando el application.yml para evitar conflictos.
+
+Configurando Eureka para descubrimiento de servicios sin error.
+
+Normalizando los puertos de cada microservicio.
+
+
 
 
 
