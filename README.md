@@ -27,8 +27,9 @@ Account-Service (8083): Creación de CVU, alias y asignación de cuentas.
 
 Base de datos MySQL compartida entre Users y Account.
 
-Diagrama:
+
 ![Arquitectura DMH](docs/ArqDMH.png)
+
 
 🚀 Guía de instalación y ejecución:
 1️⃣ Clonar repositorio: 
@@ -71,7 +72,7 @@ Registro de usuarios:
 POST http://localhost:8080/users/register
 Request: 
 {
-	  "name": "Kevin",
+	"name": "Kevin",
     "lastName": "Durant",
     "dni": "5757484389",
     "email": "kd@mail.com",
