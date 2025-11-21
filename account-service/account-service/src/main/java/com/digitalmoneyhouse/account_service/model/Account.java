@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "accounts")
 @Data
@@ -26,4 +28,7 @@ public class Account {
 
     @Column(nullable = false, unique = true)
     private String alias;
+
+    @Column(nullable = false)
+    private BigDecimal balance;
 }
