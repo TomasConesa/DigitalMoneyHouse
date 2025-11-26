@@ -7,6 +7,7 @@ public record TransactionResponse(
         Long id,
         BigDecimal amount,
         String type,
+        String description,
         LocalDateTime createdAt
 ) {
 }

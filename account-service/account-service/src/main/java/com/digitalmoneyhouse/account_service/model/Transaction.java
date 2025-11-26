@@ -31,6 +31,8 @@ public class Transaction {
     @Column(nullable = false)
     TransactionType type;
 
+    private String description;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
