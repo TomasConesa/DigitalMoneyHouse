@@ -7,6 +7,7 @@ import com.digitalmoneyhouse.users_service.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,15 +25,23 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    /*
     @GetMapping
     public ResponseEntity<List<RegisterResponse>> getAllUsers() {
         List<RegisterResponse> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
-    }
+    } */
 
     @GetMapping("/email")
     public ResponseEntity<RegisterResponse> getUserByEmail(@RequestParam String email) {
         RegisterResponse user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+    @GetMapping("/me")
+    public ResponseEntity<RegisterResponse> getMyUser() {
+        String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        RegisterResponse user = userService.getUserById(Long.parseLong(userId));
         return ResponseEntity.ok(user);
     }
 

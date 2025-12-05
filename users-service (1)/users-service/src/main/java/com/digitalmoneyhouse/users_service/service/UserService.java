@@ -73,6 +73,7 @@ public class UserService {
         );
     }
 
+    /*
     public List<RegisterResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
 
@@ -80,7 +81,7 @@ public class UserService {
             AccountResponse accountResponse = accountClient.getAccountByUserId(user.getUserId());
             return mapToRegisterResponse(user, accountResponse);
         }).toList();
-    }
+    } */
 
     public RegisterResponse getUserByEmail(String email) {
         User userByEmail = userRepository.getUserByEmail(email);
@@ -109,6 +110,15 @@ public class UserService {
                 user.getPassword(),
                 roles
         );
+    }
+
+    public RegisterResponse getUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + userId));
+
+        AccountResponse accountResponse = accountClient.getAccountByUserId(user.getUserId());
+
+        return mapToRegisterResponse(user, accountResponse);
     }
 
     @Transactional
