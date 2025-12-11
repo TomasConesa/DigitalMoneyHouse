@@ -45,8 +45,20 @@ public class AccountService {
         );
     }
 
-    public BalanceResponse getBalance(Long userId) {
+    /*
+    public BalanceResponse getBalanceByUserId(Long userId) {
         Account account = accountRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Cuenta no encontrada para el usuario con id: " + userId));
+
+        return new BalanceResponse(
+                account.getAccountId(),
+                account.getBalance()
+        );
+    }*/
+
+    public BalanceResponse getBalance(Long userId) {
+        Account account = accountRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada para el usuario con id: " + userId));
 
         return new BalanceResponse(

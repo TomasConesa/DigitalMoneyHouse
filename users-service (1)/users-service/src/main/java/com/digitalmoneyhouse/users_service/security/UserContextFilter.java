@@ -18,11 +18,9 @@ public class UserContextFilter extends OncePerRequestFilter {
 
         String userId = request.getHeader("X-User-Id");
 
-        if (userId != null && !userId.isBlank() &&
-                SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (userId != null && !userId.isBlank() && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(userId, null, List.of());
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userId, null, List.of());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
