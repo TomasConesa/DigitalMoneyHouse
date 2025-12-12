@@ -1,5 +1,9 @@
 package com.digitalmoneyhouse.users_service.controller;
 
+import com.digitalmoneyhouse.users_service.exceptions.ResourceNotFoundException;
+import com.digitalmoneyhouse.users_service.exceptions.ValidationException;
+import com.digitalmoneyhouse.users_service.model.User;
+import com.digitalmoneyhouse.users_service.model.dto.UpdateUser;
 import com.digitalmoneyhouse.users_service.model.dto.UserAuthDto;
 import com.digitalmoneyhouse.users_service.model.dto.RegisterRequest;
 import com.digitalmoneyhouse.users_service.model.dto.RegisterResponse;
@@ -7,6 +11,7 @@ import com.digitalmoneyhouse.users_service.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +29,6 @@ public class UserController {
         RegisterResponse response = userService.registerUser(request);
         return ResponseEntity.ok(response);
     }
-
-    /*
-    @GetMapping
-    public ResponseEntity<List<RegisterResponse>> getAllUsers() {
-        List<RegisterResponse> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
-    } */
 
     @GetMapping("/email")
     public ResponseEntity<RegisterResponse> getUserByEmail(@RequestParam String email) {
@@ -55,4 +53,17 @@ public class UserController {
     public ResponseEntity<UserAuthDto> getUserForAuth(@RequestParam String email) {
         return ResponseEntity.ok(userService.getUserForAuth(email));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RegisterResponse> getUserById(@PathVariable Long id) {
+        RegisterResponse response = userService.getUserById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<RegisterResponse> updateUser(@PathVariable Long id, @RequestBody UpdateUser user) {
+        RegisterResponse response = userService.updateUser(id, user);
+        return ResponseEntity.ok(response);
+    }
+
 }

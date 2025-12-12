@@ -1,18 +1,18 @@
 package com.digitalmoneyhouse.users_service.service;
 
 import com.digitalmoneyhouse.users_service.client.AccountClient;
+import com.digitalmoneyhouse.users_service.exceptions.ForbiddenException;
 import com.digitalmoneyhouse.users_service.exceptions.ResourceNotFoundException;
+import com.digitalmoneyhouse.users_service.exceptions.UnauthorizedException;
 import com.digitalmoneyhouse.users_service.exceptions.ValidationException;
 import com.digitalmoneyhouse.users_service.model.Role;
 import com.digitalmoneyhouse.users_service.model.User;
-import com.digitalmoneyhouse.users_service.model.dto.AccountResponse;
-import com.digitalmoneyhouse.users_service.model.dto.UserAuthDto;
-import com.digitalmoneyhouse.users_service.model.dto.RegisterRequest;
-import com.digitalmoneyhouse.users_service.model.dto.RegisterResponse;
+import com.digitalmoneyhouse.users_service.model.dto.*;
 import com.digitalmoneyhouse.users_service.repository.RoleRepository;
 import com.digitalmoneyhouse.users_service.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,15 +73,6 @@ public class UserService {
         );
     }
 
-    /*
-    public List<RegisterResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
-
-        return users.stream().map(user -> {
-            AccountResponse accountResponse = accountClient.getAccountByUserId(user.getUserId());
-            return mapToRegisterResponse(user, accountResponse);
-        }).toList();
-    } */
 
     public RegisterResponse getUserByEmail(String email) {
         User userByEmail = userRepository.getUserByEmail(email);
@@ -131,6 +122,77 @@ public class UserService {
 
         user.getRoles().add(role);
         userRepository.save(user);
+    }
+
+    public RegisterResponse updateUser(Long userId, UpdateUser updateUser) {
+        Long authenticatedUserId = Long.parseLong(
+                SecurityContextHolder.getContext()
+                        .getAuthentication()
+                        .getPrincipal()
+                        .toString()
+        );
+
+        if (!authenticatedUserId.equals(userId)) {
+            throw new ForbiddenException("No tenés permiso para modificar este usuario");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + userId));
+
+        if (updateUser.name() != null) {
+            String name = updateUser.name().trim();
+            if (name.isBlank()) {
+                throw new ValidationException("El nombre no puede estar vacío.");
+            }
+            user.setName(name);
+        }
+
+        if (updateUser.lastName() != null) {
+            String lastName = updateUser.lastName().trim();
+            if (lastName.isBlank()) {
+                throw new ValidationException("El apellido no puede estar vacío.");
+            }
+            user.setLastName(lastName);
+        }
+
+        if (updateUser.telephone() != null) {
+            String telephone = updateUser.telephone().trim();
+            if (telephone.isBlank()) {
+                throw new ValidationException("El teléfono no puede estar vacío.");
+            }
+            user.setTelephone(telephone);
+        }
+
+        if (updateUser.dni() != null) {
+            String dni = updateUser.dni().trim();
+            if (dni.isBlank()) {
+                throw new ValidationException("El DNI no puede estar vacío.");
+            }
+
+            if (!dni.equals(user.getDni()) && userRepository.existsByDniAndUserIdNot(dni, user.getUserId())) {
+                throw new ValidationException("DNI ya registrado.");
+            }
+
+            user.setDni(dni);
+        }
+
+        if (updateUser.email() != null) {
+            String email = updateUser.email().trim();
+            if (email.isBlank()) {
+                throw new ValidationException("El email no puede estar vacío.");
+            }
+
+            if (!email.equals(user.getEmail()) && userRepository.existsByEmailAndUserIdNot(email, user.getUserId())) {
+                throw new ValidationException("Email ya registrado.");
+            }
+
+            user.setEmail(email);
+        }
+
+        userRepository.save(user);
+
+        AccountResponse accountResponse = accountClient.getAccountByUserId(user.getUserId());
+        return mapToRegisterResponse(user, accountResponse);
     }
 
 }
