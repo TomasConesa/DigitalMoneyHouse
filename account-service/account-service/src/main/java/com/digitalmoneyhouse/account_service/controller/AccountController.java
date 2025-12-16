@@ -1,8 +1,6 @@
 package com.digitalmoneyhouse.account_service.controller;
 
-import com.digitalmoneyhouse.account_service.model.dto.AccountResponse;
-import com.digitalmoneyhouse.account_service.model.dto.BalanceResponse;
-import com.digitalmoneyhouse.account_service.model.dto.TransactionResponse;
+import com.digitalmoneyhouse.account_service.model.dto.*;
 import com.digitalmoneyhouse.account_service.service.AccountService;
 import com.digitalmoneyhouse.account_service.service.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +23,6 @@ public class AccountController {
         AccountResponse response = accountService.createAccount(userId);
         return ResponseEntity.ok(response);
     }
-    /*
-    @PostMapping("/create")
-    public ResponseEntity<AccountResponse> createAccount() {
-        String userId = (String) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-
-        AccountResponse response = accountService.createAccount(Long.parseLong(userId));
-        return ResponseEntity.ok(response);
-    }*/
 
     /*
     @GetMapping("/me/balance")
@@ -69,6 +57,16 @@ public class AccountController {
         AccountResponse response = accountService.getAccountByUserId(Long.parseLong(userId));
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{accountId}/info")
+    public ResponseEntity<AccountInfoResponse> getAccountInfo(@PathVariable Long accountId) {
+        return ResponseEntity.ok(accountService.getAccountInfoById(accountId));
+    }
+
+    @PatchMapping("/{accountId}")
+    public ResponseEntity<AccountInfoResponse> updateAccount(@PathVariable Long accountId, @RequestBody UpdateAlias request) {
+        return ResponseEntity.ok(accountService.updateAccount(accountId, request));
     }
 
 

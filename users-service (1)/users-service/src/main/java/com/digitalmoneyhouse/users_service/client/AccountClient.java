@@ -15,6 +15,4 @@ public interface AccountClient {
 
     @GetMapping("/accounts/user/{userId}")
     AccountResponse getAccountByUserId(@PathVariable Long userId);
-
-
 }
