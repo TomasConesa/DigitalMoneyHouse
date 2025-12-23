@@ -2,8 +2,10 @@ package com.digitalmoneyhouse.account_service.controller;
 
 import com.digitalmoneyhouse.account_service.model.dto.*;
 import com.digitalmoneyhouse.account_service.service.AccountService;
+import com.digitalmoneyhouse.account_service.service.CardService;
 import com.digitalmoneyhouse.account_service.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +19,13 @@ public class AccountController {
 
     private final AccountService accountService;
     private final TransactionService transactionService;
+    private final CardService cardService;
 
     @PostMapping("/create")
     public ResponseEntity<AccountResponse> createAccount(@RequestParam Long userId) {
         AccountResponse response = accountService.createAccount(userId);
         return ResponseEntity.ok(response);
     }
-
-    /*
-    @GetMapping("/me/balance")
-    public ResponseEntity<BalanceResponse> getMyBalance() {
-        String userId = (String) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-
-        BalanceResponse response = accountService.getBalance(Long.parseLong(userId));
-
-        return ResponseEntity.ok(response);
-    }*/
-
 
     @GetMapping("/{accountId}")
     public ResponseEntity<BalanceResponse> getBalance(@PathVariable Long accountId) {
@@ -67,6 +57,12 @@ public class AccountController {
     @PatchMapping("/{accountId}")
     public ResponseEntity<AccountInfoResponse> updateAccount(@PathVariable Long accountId, @RequestBody UpdateAlias request) {
         return ResponseEntity.ok(accountService.updateAccount(accountId, request));
+    }
+
+    @PostMapping("/{accountId}/cards")
+    public ResponseEntity<CardResponse> linkCardToAccount(@PathVariable Long accountId, @RequestParam Long cardId) {
+        CardResponse cardResponse = cardService.linkCardToAccount(accountId, cardId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cardResponse);
     }
 
 

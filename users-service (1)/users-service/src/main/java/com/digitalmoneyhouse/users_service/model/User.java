@@ -2,17 +2,15 @@ package com.digitalmoneyhouse.users_service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -42,7 +40,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    // Relación con roles
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

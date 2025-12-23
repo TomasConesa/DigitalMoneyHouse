@@ -44,7 +44,6 @@ public class TransactionService {
         return new TransactionResponse(
                 transaction.getId(),
                 transaction.getAmount(),
-                transaction.getType().name(),
                 transaction.getDescription(),
                 transaction.getCreatedAt()
         );
