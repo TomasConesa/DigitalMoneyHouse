@@ -107,4 +107,15 @@ public class CardService {
 
         return mapCardToResponse(card);
     }
+
+    public void deleteCard(Long accountId, Long cardId) {
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tarjeta no encontrada con ID: " + cardId));
+
+        if (!card.getAccount().getAccountId().equals(accountId)) {
+            throw new ResourceNotFoundException("La tarjeta no pertenece a esta cuenta");
+        }
+
+        cardRepository.delete(card);
+    }
 }

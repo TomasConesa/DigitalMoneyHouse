@@ -26,7 +26,9 @@ public class SecurityConfig {
                                 "/actuator/health",
                                 "/accounts/create",
                                 "/accounts/user/{userId}"
-                        ).permitAll().anyRequest().authenticated()
+                        ).permitAll()
+                        .requestMatchers("/accounts/**", "/cards/**").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(userContextFilter, UsernamePasswordAuthenticationFilter.class);

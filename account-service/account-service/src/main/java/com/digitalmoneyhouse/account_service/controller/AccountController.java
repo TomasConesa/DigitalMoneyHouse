@@ -65,6 +65,12 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cardResponse);
     }
 
+    @DeleteMapping("/{accountId}/cards/{cardId}")
+    public ResponseEntity<String> deleteCard(@PathVariable Long accountId, @PathVariable Long cardId) {
+        cardService.deleteCard(accountId, cardId);
+        return ResponseEntity.ok().body("Tarjeta eliminada correctamente");
+    }
+
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<AccountResponse> getAccountByUserId(@PathVariable Long userId) {
