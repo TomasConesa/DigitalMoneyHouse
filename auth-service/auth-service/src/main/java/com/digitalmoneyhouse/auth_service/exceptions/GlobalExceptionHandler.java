@@ -12,8 +12,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(JwtException.class)
-    public ResponseEntity<Map<String, Object>> handleJwtException(JwtException ex) {
+    @ExceptionHandler(CustomJwtException.class)
+    public ResponseEntity<Map<String, Object>> handleJwtException(CustomJwtException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now()); // Fecha y hora del error
         body.put("status", HttpStatus.UNAUTHORIZED.value()); // codigo HTTP
