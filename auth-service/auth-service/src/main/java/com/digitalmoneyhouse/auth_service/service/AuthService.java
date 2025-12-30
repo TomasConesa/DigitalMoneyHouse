@@ -32,10 +32,10 @@ public class AuthService {
         }
 
         if (!passwordEncoder.matches(request.password(), user.password())) {
-            throw new ValidationException("Contraseña incorrecta");
+            throw new ValidationException("Credenciales inválidas");
         }
 
-        String token = jwtGenerator.generateToken(user.email(), user.roles());
+        String token = jwtGenerator.generateToken(user.id(), user.email(), user.roles());
 
         return new LoginResponse(token, user.roles());
     }

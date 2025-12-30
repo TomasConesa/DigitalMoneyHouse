@@ -1,12 +1,9 @@
 package com.digitalmoneyhouse.auth_service.util;
 
-import com.digitalmoneyhouse.auth_service.exceptions.JwtException;
+import com.digitalmoneyhouse.auth_service.exceptions.CustomJwtException;
 import com.digitalmoneyhouse.auth_service.exceptions.JwtExpiredException;
 import com.digitalmoneyhouse.auth_service.exceptions.JwtInvalidException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,12 +26,13 @@ public class JwtGenerator {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String email, List<String> roles) {
+    public String generateToken(Long userId, String email, List<String> roles) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .setSubject(email)
+                .claim("id", userId.toString())
                 .claim("roles", roles)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
@@ -52,7 +50,7 @@ public class JwtGenerator {
                     .getSubject();
         } catch (ExpiredJwtException e) {
             throw new JwtExpiredException("Token expirado");
-        } catch (io.jsonwebtoken.JwtException e) {
+        } catch (JwtException e) {
             throw new JwtInvalidException("Token inválido");
         }
     }
@@ -68,7 +66,7 @@ public class JwtGenerator {
             return claims.get("roles", List.class);
         } catch (ExpiredJwtException e) {
             throw new JwtExpiredException("Token expirado");
-        } catch (io.jsonwebtoken.JwtException e) {
+        } catch (JwtException e) {
             throw new JwtInvalidException("Token inválido");
         }
     }
@@ -77,7 +75,7 @@ public class JwtGenerator {
         try {
             extractUsername(token);
             return true;
-        } catch (JwtException e) {
+        } catch (CustomJwtException e) {
             return false;
         }
     }
