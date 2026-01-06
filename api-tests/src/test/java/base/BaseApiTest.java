@@ -34,6 +34,6 @@ public abstract class BaseApiTest {
                 .statusCode(200)
                 .extract()
                 .jsonPath()
-                .getString("token"); // ajustá si tu campo se llama distinto
+                .getString("token");
     }
 }
