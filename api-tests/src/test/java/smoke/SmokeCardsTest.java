@@ -79,6 +79,7 @@ public class SmokeCardsTest extends BaseApiTest {
                 .contains(createdCardId);
     }
 
+
     @Test
     @Order(4)
     void deleteCard() {

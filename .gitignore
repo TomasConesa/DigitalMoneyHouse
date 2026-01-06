@@ -5,6 +5,7 @@
 
 # Ignore IntelliJ IDEA
 /.idea/
+.idea/
 
 # Ignore build outputs
 target/
