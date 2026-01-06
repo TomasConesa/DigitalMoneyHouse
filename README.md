@@ -137,6 +137,11 @@ Usar las requests ya configuradas apuntando al API Gateway (http://localhost:808
 
 Agregar el JWT (en caso del logout) en el header Authorization: Bearer <token>.
 
+🔧 Testing automatizado
+El módulo `api-tests` es un proyecto independiente que utiliza:
+- JUnit 5
+- RestAssured
+- Assertions con AssertJ
 
 
 💡 Decisiones Técnicas y Problemas Resueltos
@@ -175,6 +180,41 @@ Reestructurando el application.yml para evitar conflictos.
 Configurando Eureka para descubrimiento de servicios sin error.
 
 Normalizando los puertos de cada microservicio.
+
+
+🚀 Sprint 2 – Funcionalidades implementadas
+
+En el Sprint 2 se incorporaron nuevas funcionalidades orientadas a la gestión de cuentas, movimientos y tarjetas, junto con mejoras en testing y validación de reglas de negocio.
+
+🔹 Gestión de información de cuenta
+- Obtener información detallada de una cuenta (CVU, alias y saldo).
+- Endpoint:
+    - GET /accounts/{accountId}/info
+
+🔹 Visualización de movimientos
+- Consulta de los últimos 5 movimientos de una cuenta, ordenados del más reciente al más antiguo.
+- Endpoint:
+    - GET /accounts/{accountId}/transactions
+
+🔹 Gestión de tarjetas
+- Crear una tarjeta de débito o crédito.
+    - POST /cards
+- Asociar una tarjeta existente a una cuenta.
+    - POST /accounts/{accountId}/cards
+- Listar las tarjetas asociadas a una cuenta.
+    - GET /cards/{accountId}/cards
+- Eliminar una tarjeta asociada a una cuenta.
+    - DELETE /accounts/{accountId}/cards/{cardId}
+
+📌 Reglas de negocio implementadas:
+- Una tarjeta solo puede estar asociada a una única cuenta.
+- No se permite asociar una tarjeta que ya pertenece a otra cuenta (HTTP 409).
+- Validaciones de existencia de cuenta y tarjeta (HTTP 404).
+
+🔐 Seguridad
+- Todos los endpoints están protegidos mediante JWT.
+- Autorización vía header:
+  Authorization: Bearer <token>
 
 
 
