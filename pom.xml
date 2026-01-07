@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.digitalmoneyhouse</groupId>
+    <artifactId>digitalmoneyhouse-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>api-tests</module>
+        <module>api-gateway/api-gateway</module>
+        <module>auth-service/auth-service</module>
+        <module>account-service/account-service</module>
+        <module>users-service (1)/users-service</module>
+        <module>eureka-server (1)/eureka-server</module>
+    </modules>
+</project>

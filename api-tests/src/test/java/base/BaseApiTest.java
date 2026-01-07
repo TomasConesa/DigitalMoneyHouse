@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import static io.restassured.RestAssured.given;
 
+
 public abstract class BaseApiTest {
 
     protected static String token;
