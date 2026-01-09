@@ -12,5 +12,5 @@ public record CardResponse(
         String last4numbers,
         Integer expiryMonth,
         Integer expiryYear,
-        Long accountId // solo el id para la respuesta
+        Long accountId
 ) {}
