@@ -22,8 +22,8 @@ public class AccountController {
     private final CardService cardService;
 
     @PostMapping("/create")
-    public ResponseEntity<AccountResponse> createAccount(@RequestParam Long userId) {
-        AccountResponse response = accountService.createAccount(userId);
+    public ResponseEntity<AccountInfoResponse> createAccount(@RequestParam Long userId) {
+        AccountInfoResponse response = accountService.createAccount(userId);
         return ResponseEntity.ok(response);
     }
 
@@ -33,18 +33,19 @@ public class AccountController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{accountId}/transactions")
+   /* @GetMapping("/{accountId}/transactions")
     public ResponseEntity<List<TransactionResponse>> getTransactions(@PathVariable Long accountId) {
         List<TransactionResponse> transactions = transactionService.getTransactionsByAccount(accountId);
         return ResponseEntity.ok(transactions);
-    }
+    } */
+
 
     @GetMapping("/me")
-    public ResponseEntity<AccountResponse> getMyAccount() {
+    public ResponseEntity<AccountInfoResponse> getMyAccount() {
         String userId = (String) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
 
-        AccountResponse response = accountService.getAccountByUserId(Long.parseLong(userId));
+        AccountInfoResponse response = accountService.getAccountByUserId(Long.parseLong(userId));
 
         return ResponseEntity.ok(response);
     }
@@ -73,8 +74,8 @@ public class AccountController {
 
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<AccountResponse> getAccountByUserId(@PathVariable Long userId) {
-        AccountResponse accountResponse = accountService.getAccountByUserId(userId);
+    public ResponseEntity<AccountInfoResponse> getAccountByUserId(@PathVariable Long userId) {
+        AccountInfoResponse accountResponse = accountService.getAccountByUserId(userId);
         return ResponseEntity.ok(accountResponse);
     }
 }

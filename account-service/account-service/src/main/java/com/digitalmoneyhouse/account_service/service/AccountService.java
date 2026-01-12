@@ -22,7 +22,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AliasCvu generator;
 
-    public AccountResponse createAccount(Long userId) {
+    public AccountInfoResponse createAccount(Long userId) {
         String cvu = generator.generateCVU();
         String alias = generator.generateAlias();
 
@@ -42,10 +42,11 @@ public class AccountService {
 
         Account savedAccount = accountRepository.save(newAccount);
 
-        return new AccountResponse(
+        return new AccountInfoResponse(
                 savedAccount.getAccountId(),
                 savedAccount.getCvu(),
-                savedAccount.getAlias()
+                savedAccount.getAlias(),
+                savedAccount.getBalance()
         );
     }
 
@@ -102,14 +103,15 @@ public class AccountService {
         );
     }
 
-    public AccountResponse getAccountByUserId(Long userId) {
+    public AccountInfoResponse getAccountByUserId(Long userId) {
         Account account = accountRepository.getAccountByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada para usuario con id: " + userId));
 
-        return new AccountResponse(
+        return new AccountInfoResponse(
                 account.getAccountId(),
                 account.getCvu(),
-                account.getAlias()
+                account.getAlias(),
+                account.getBalance()
         );
     }
 }
