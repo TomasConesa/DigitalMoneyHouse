@@ -93,6 +93,4 @@ public class SmokeCardsTest extends BaseApiTest {
                 .then()
                 .statusCode(200);
     }
-
-
 }
