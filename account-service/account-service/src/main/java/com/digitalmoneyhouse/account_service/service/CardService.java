@@ -50,23 +50,6 @@ public class CardService {
         return mapCardToResponse(cardSaved);
     }
 
-    /*@Transactional
-    public CardResponse linkCardToAccount(Long accountId, Long cardId) {
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("La cuenta no existe"));
-
-        Card card = cardRepository.findById(cardId)
-                .orElseThrow(() -> new ResourceNotFoundException("La tarjeta no existe"));
-
-        if (card.getAccount() != null && !card.getAccount().getAccountId().equals(accountId)) {
-            throw new ConflictException("La tarjeta ya está asociada a otra cuenta");
-        }
-        card.setAccount(account);
-
-        Card cardSaved = cardRepository.save(card);
-        return mapCardToResponse(cardSaved);
-    }*/
-
     @Transactional
     public CardResponse linkCardToAccount(Long accountId, Long cardId) {
         Account account = getAccountOwned(accountId);
@@ -83,20 +66,6 @@ public class CardService {
         return mapCardToResponse(cardSaved);
     }
 
-
-  /*  @Transactional(readOnly = true)
-    public List<CardResponse> getCardsByAccount(Long accountId) {
-
-        accountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("La cuenta no existe"));
-
-        List<Card> cards = cardRepository.findByAccount_AccountId(accountId);
-
-        return cards.stream()
-                .map(this::mapCardToResponse)
-                .toList();
-    }*/
-
     @Transactional(readOnly = true)
     public List<CardResponse> getCardsByAccount(Long accountId) {
         getAccountOwned(accountId);
@@ -108,17 +77,6 @@ public class CardService {
                 .toList();
     }
 
-    /*public CardResponse getCardOfAccount(Long accountId, Long cardId) {
-
-        accountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("La cuenta no existe"));
-
-        Card card = cardRepository.findByAccount_AccountIdAndCardId(accountId, cardId)
-                .orElseThrow(() -> new ResourceNotFoundException("La tarjeta no existe o no pertenece a esta cuenta"));
-
-        return mapCardToResponse(card);
-    }*/
-
     public CardResponse getCardOfAccount(Long accountId, Long cardId) {
         getAccountOwned(accountId);
 
@@ -127,17 +85,6 @@ public class CardService {
 
         return mapCardToResponse(card);
     }
-
-   /* public void deleteCard(Long accountId, Long cardId) {
-        Card card = cardRepository.findById(cardId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tarjeta no encontrada con ID: " + cardId));
-
-        if (!card.getAccount().getAccountId().equals(accountId)) {
-            throw new ResourceNotFoundException("La tarjeta no pertenece a esta cuenta");
-        }
-
-        cardRepository.delete(card);
-    }*/
 
     public void deleteCard(Long accountId, Long cardId) {
         getAccountOwned(accountId);
