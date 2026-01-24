@@ -36,10 +36,9 @@ public class TransactionController {
         return ResponseEntity.ok(transaction);
     }
 
-    @PostMapping("/{accountId}/transferences")
+    @PostMapping("/{accountId}/transactions/deposit")
     public ResponseEntity<TransactionResponse> addMoneyFromCard(@PathVariable Long accountId, @Valid @RequestBody AddMoneyRequest request) {
         TransactionResponse transactionResponse = transactionService.addMoneyFromCard(accountId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionResponse);
     }
-
 }

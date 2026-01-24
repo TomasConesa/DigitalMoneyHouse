@@ -18,12 +18,11 @@ import java.util.List;
 public class AccountController {
 
     private final AccountService accountService;
-    private final TransactionService transactionService;
     private final CardService cardService;
 
     @PostMapping("/create")
-    public ResponseEntity<AccountInfoResponse> createAccount(@RequestParam Long userId) {
-        AccountInfoResponse response = accountService.createAccount(userId);
+    public ResponseEntity<AccountResponse> createAccount(@RequestParam Long userId) {
+        AccountResponse response = accountService.createAccount(userId);
         return ResponseEntity.ok(response);
     }
 
@@ -33,30 +32,23 @@ public class AccountController {
         return ResponseEntity.ok(response);
     }
 
-   /* @GetMapping("/{accountId}/transactions")
-    public ResponseEntity<List<TransactionResponse>> getTransactions(@PathVariable Long accountId) {
-        List<TransactionResponse> transactions = transactionService.getTransactionsByAccount(accountId);
-        return ResponseEntity.ok(transactions);
-    } */
-
-
     @GetMapping("/me")
-    public ResponseEntity<AccountInfoResponse> getMyAccount() {
+    public ResponseEntity<AccountResponse> getMyAccount() {
         String userId = (String) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
 
-        AccountInfoResponse response = accountService.getAccountByUserId(Long.parseLong(userId));
+        AccountResponse response = accountService.getAccountByUserId(Long.parseLong(userId));
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{accountId}/info")
-    public ResponseEntity<AccountInfoResponse> getAccountInfo(@PathVariable Long accountId) {
+    public ResponseEntity<AccountResponse> getAccountInfo(@PathVariable Long accountId) {
         return ResponseEntity.ok(accountService.getAccountInfoById(accountId));
     }
 
     @PatchMapping("/{accountId}")
-    public ResponseEntity<AccountInfoResponse> updateAccount(@PathVariable Long accountId, @RequestBody UpdateAlias request) {
+    public ResponseEntity<AccountResponse> updateAccount(@PathVariable Long accountId, @RequestBody UpdateAlias request) {
         return ResponseEntity.ok(accountService.updateAccount(accountId, request));
     }
 
@@ -74,8 +66,8 @@ public class AccountController {
 
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<AccountInfoResponse> getAccountByUserId(@PathVariable Long userId) {
-        AccountInfoResponse accountResponse = accountService.getAccountByUserId(userId);
+    public ResponseEntity<AccountResponse> getAccountByUserId(@PathVariable Long userId) {
+        AccountResponse accountResponse = accountService.getAccountByUserId(userId);
         return ResponseEntity.ok(accountResponse);
     }
 }
