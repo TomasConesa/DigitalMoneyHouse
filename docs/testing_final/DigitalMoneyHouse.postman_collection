@@ -1,0 +1,840 @@
+{
+  "info": {
+    "_postman_id": "0d2e4d46-e3ee-4fb0-aef4-10ed7ada812e",
+    "name": "Digital Money House",
+    "description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "24823323"
+  },
+  "item": [
+    {
+      "name": "getUserByEmail",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW51ZWxAbWFpbC5jb20iLCJpYXQiOjE3NDk3Mzc0MDUsImV4cCI6MTc0OTc0MTAwNX0.c4rsvAD--e1Tw9lPW0VNRZiEXHppRpkdGk0KQwYeHyQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"email\": \"manuel@mail.com\",\n    \"password\": \"manuel\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/accounts/user/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "user",
+            "1"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "registerUser",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZHJpYW5AbWFpbC5jb20iLCJpYXQiOjE3NTM5ODg5ODMsImV4cCI6MTc1Mzk5MjU4M30.1XxpZCg-FL6WXiMD3YJGkUP_jaLcDJ_y1bMYk4IGYic",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"Gateway\",\n    \"lastName\": \"Gateway\",\n    \"dni\": \"789621255\",\n    \"email\": \"gateway@mail.com\",\n    \"telephone\": \"156156\",\n    \"password\": \"pegadaalgateway\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/users/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "users",
+            "register"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful PUT request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW51ZWxAbWFpbC5jb20iLCJpYXQiOjE3NDk3Mzc0MDUsImV4cCI6MTc0OTc0MTAwNX0.c4rsvAD--e1Tw9lPW0VNRZiEXHppRpkdGk0KQwYeHyQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"email\": \"manuel@mail.com\",\n    \"password\": \"manuel\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "getAccountByUserId",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY3NzI2OTUzLCJleHAiOjE3Njc3MzA1NTN9.LEy7aeUzIhFwATnhjintU8dv7Gq3lRjqOwmMvDLWSh8",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/user/37",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "user",
+            "37"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "addRol",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/users/16/roles?roleName=ROLE_ADMIN",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "users",
+            "16",
+            "roles"
+          ],
+          "query": [
+            {
+              "key": "roleName",
+              "value": "ROLE_ADMIN"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "logout",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmluY2lwaXRvQG1haWwuY29tIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTc1ODg5NzU0NCwiZXhwIjoxNzU4OTAxMTQ0fQ._sAy21R9FJoh-_Yw27Jt_kvvsnhNI47jPt0iu9FdHig",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"principito@mail.com\",\n    \"password\": \"principe7\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/auth/user/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "auth",
+            "user",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getBalance",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY4OTUxMzQyLCJleHAiOjE3Njg5NTQ5NDJ9.T57cXxoPVVUle2Xs9NclY6vTd_nHye659v1NrleSFWw",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/28",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getMyUser",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "getTransactions",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZEBtYWlsLmNvbSIsImlkIjoiMzQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY1NDc5OTc0LCJleHAiOjE3NjU0ODM1NzR9.opdRTOoloYc8meXsUrOTCrchvNQvL36eVuIJCZh5lQs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/26/transactions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "26",
+            "transactions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getUserById",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY3NzI2OTUzLCJleHAiOjE3Njc3MzA1NTN9.LEy7aeUzIhFwATnhjintU8dv7Gq3lRjqOwmMvDLWSh8",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/users/37",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "users",
+            "37"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateUser",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZEBtYWlsLmNvbSIsImlkIjoiMzQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY1NTY4NjI5LCJleHAiOjE3NjU1NzIyMjl9.-43wgRJ31qyXupd1taBGFKLI8YBI_7ly6hKLQpKiO4E",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Kevin\",\r\n    \"dni\": \"42402561\",\r\n    \"email\":\"kd@mail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/users/34",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "users",
+            "34"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getAccountInfo",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY3NzI2OTUzLCJleHAiOjE3Njc3MzA1NTN9.LEy7aeUzIhFwATnhjintU8dv7Gq3lRjqOwmMvDLWSh8",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/info",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "info"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateAlias",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWlkb0BtYWlsLmNvbSIsImlkIjoiMTYiLCJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sImlhdCI6MTc2NTkwMzQ1OSwiZXhwIjoxNzY1OTA3MDU5fQ._4NiTqLuNv8IbHBgSfZUSXs7kqu5ex1nu-6X93rov80",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"alias\": \"guido.mp.9\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/accounts/13",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "13"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createCard",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/cards",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "cards"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "linkCardToAccount",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWlkb0BtYWlsLmNvbSIsImlkIjoiMTYiLCJyb2xlcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sImlhdCI6MTc2NjA4MzUzMSwiZXhwIjoxNzY2MDg3MTMxfQ.tfOdIa_W7UewfpIRCOEs_wAwgVWu4fVVx_NgSD-o6nQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/accounts/13/cards?cardId=1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "13",
+            "cards"
+          ],
+          "query": [
+            {
+              "key": "cardId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getCardsByAccount",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZEBtYWlsLmNvbSIsImlkIjoiMzQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY2MTgxMjMzLCJleHAiOjE3NjYxODQ4MzN9.zkQssMIcCKkkK5UjADeDHyoRMDrVG0G-aDZZURjfeiQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/cards/26/cards",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "cards",
+            "26",
+            "cards"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getCardOfAccount",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZEBtYWlsLmNvbSIsImlkIjoiMzQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY2MTgxMjMzLCJleHAiOjE3NjYxODQ4MzN9.zkQssMIcCKkkK5UjADeDHyoRMDrVG0G-aDZZURjfeiQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/cards/6/cards/26",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "cards",
+            "6",
+            "cards",
+            "26"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteCard",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/cards/9",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "cards",
+            "9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getActivity",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY3ODg1MTc5LCJleHAiOjE3Njc4ODg3Nzl9.ZH-mDrjy9xFV6pxL4i2q1u-WD38XgELZBrQgd62OtWk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/activity",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "activity"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getTransactionDetail",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY4OTUxMzQyLCJleHAiOjE3Njg5NTQ5NDJ9.T57cXxoPVVUle2Xs9NclY6vTd_nHye659v1NrleSFWw",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/activity/12",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "activity",
+            "12"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "addMoneyFromCard",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY4OTUxMzQyLCJleHAiOjE3Njg5NTQ5NDJ9.T57cXxoPVVUle2Xs9NclY6vTd_nHye659v1NrleSFWw",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"cardId\": 7,\r\n    \"amount\": 50000.00,\r\n    \"description\": \"Carga desde tarjeta\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/transactions/deposit",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "transactions",
+            "deposit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createTransference",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY4OTUwNzcxLCJleHAiOjE3Njg5NTQzNzF9.VrrHuRzgH0lGD6dsbCGrd80znBeppDprP72c_GNDYc0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"amount\": 2000,\r\n    \"destination\": \"guido.mp.9\",\r\n    \"description\": \"Comida\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/transferences",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "transferences"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getLastRecipients",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YXBpYUBtYWlsLmNvbSIsImlkIjoiMzciLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzY4OTUwNzcxLCJleHAiOjE3Njg5NTQzNzF9.VrrHuRzgH0lGD6dsbCGrd80znBeppDprP72c_GNDYc0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/accounts/28/transferences",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "accounts",
+            "28",
+            "transferences"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "id",
+      "value": "1"
+    },
+    {
+      "key": "base_url",
+      "value": "https://postman-rest-api-learner.glitch.me/"
+    }
+  ]
+}
