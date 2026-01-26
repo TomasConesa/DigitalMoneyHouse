@@ -217,6 +217,111 @@ En el Sprint 2 se incorporaron nuevas funcionalidades orientadas a la gestión d
   Authorization: Bearer <token>
 
 
+🚀 Sprint 3 – Funcionalidades implementadas
+
+En el Sprint 3 se incorporaron funcionalidades orientadas a ingresar dinero en cuentas y consultar la actividad completa de la billetera, permitiendo visualizar el historial y el detalle de transferencias.
+
+🔹 Historial completo de actividad de una cuenta
+
+Como usuario, puedo ver toda la actividad realizada con mi billetera, desde la más reciente a la más antigua.
+
+✅ Endpoint:
+
+GET /accounts/{accountId}/activity
+
+📌 Recibe: token JWT + id de cuenta
+📌 Devuelve: movimientos históricos (ordenados por fecha descendente)
+
+✅ Respuestas esperadas:
+200 OK
+400 Bad Request
+403 Forbidden (sin permisos)
+500 Internal Server Error
+
+🔹 Detalle de una transferencia específica
+
+Como usuario, puedo consultar el detalle de una actividad puntual (una transferencia en específico).
+
+✅ Endpoint:
+
+GET /accounts/{accountId}/activity/{transferId}
+
+📌 Recibe: token JWT + id de cuenta + id transferencia
+📌 Devuelve: detalle completo de la transferencia seleccionada
+
+✅ Respuestas esperadas:
+200 OK
+400 Bad Request
+403 Forbidden (sin permisos)
+404 Not Found (id inexistente)
+500 Internal Server Error
+
+🔹 Ingreso de dinero a la billetera desde tarjeta existente
+
+Como usuario, puedo ingresar dinero a mi cuenta utilizando una tarjeta registrada (débito/crédito).
+
+✅ Endpoint:
+
+POST /accounts/{accountId}/transactions/deposit
+
+📌 Recibe: token JWT + detalle de la transferencia + monto
+📌 Devuelve: confirmación de operación
+
+✅ Respuestas esperadas:
+201 Created
+400 Bad Request
+403 Forbidden (sin permisos)
+404 Not Found (cuenta no existente)
+500 Internal Server Error
+
+🤖 Testing automatizado (Sprint 3)
+Se agregaron los casos de prueba automatizados correspondientes a este sprint dentro del módulo api-tests.
+
+🚀 Sprint 4 – Funcionalidades implementadas
+
+En el Sprint 4 se incorporaron funcionalidades orientadas a transferir dinero entre cuentas, permitiendo enviar saldo disponible a otro usuario a través de CBU/CVU/alias, y consultar los últimos destinatarios utilizados.
+
+🔹 Consulta de últimos destinatarios
+
+Como usuario, puedo consultar rápidamente los últimos destinatarios a los que realicé transferencias.
+
+✅ Endpoint:
+
+GET /accounts/{accountId}/transferences
+
+📌 Recibe: token JWT + id de la cuenta
+📌 Devuelve: últimos destinatarios utilizados para transferencias
+
+✅ Respuestas esperadas:
+200 OK
+400 Bad Request
+500 Internal Server Error
+
+🔹 Transferir dinero a otra cuenta (por CVU/alias)
+
+Como usuario, puedo transferir dinero desde mi billetera a otra cuenta utilizando CBU/CVU/alias, siempre que tenga fondos suficientes.
+
+✅ Endpoint:
+
+POST /accounts/{accountId}/transferences
+
+📌 Recibe: token JWT + id de la cuenta
+📌 Devuelve: confirmación de transferencia realizada
+
+✅ Respuestas esperadas:
+200 OK
+400 Bad Request
+410 Gone (fondos insuficientes)
+500 Internal Server Error
+
+📌 Reglas de negocio implementadas:
+Validación de fondos suficientes antes de confirmar la transferencia.
+Validación de datos requeridos (monto, destinatario).
+
+🔍 Testing exploratorio (Sprint 4)
+Se realizó Testing Exploratorio sobre las funcionalidades incorporadas en este sprint.
+Se entregó un documento con notas, alcance y organización del test exploratorio.
+
 
 
 
